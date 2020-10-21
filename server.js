@@ -52,10 +52,37 @@ app.get(['/projects'], async (request, response) => {
     
 })
 app.post(['/','/projects'], async (req,res) => {
-    await Project.create({text: req.body.text})
-   
+    // await Project.create({text: req.body.text})
+    Project.findByPk(req.params.project_id)
+    .then(project => {
+        project.update({text: req.body.text})
+        res.send()
+    })
+    // res.send()
+})
+
+//EDIT PROJECT
+app.post('/projects/:project_id/edit', async(request, response) => {
+    const project = await Project.findByPk(request.params.project_id)
+    await project.update(request.body)
+    
+    // const project = await Project.findByPk(request.params.project_id)
+    // Project.findByPk(req.params.project_id)
+    // .then (project => {
+    //     project.text = {text: req.body.text}
+    //     res.send()
+    // })
     res.send()
 })
+
+//DELETE PROJECT
+app.get('/projects/:project_id/delete', async (req, res) => {
+    Project.findByPk(req.params.project_id)
+    .then(project => {
+        project.destroy()
+        res.send()
+
+    })
 
 //GET SINGULAR PROJECT
  
@@ -71,22 +98,8 @@ app.get('/projects/:project_id', async (request, response) => {
     response.render('project',{project:JSON.stringify(project), date: new Date()}
     )
 })
-//EDIT PROJECT
-app.post('/projects/:project_id/edit', async(request, response) => {
-    const project = await Project.findByPk(request.params.project_id)
-   
-    // response.render('projects',{projects})   
-    response.send()
-})
 
-//DELETE PROJECT
-app.get('/projects/:project_id/delete', async (req, res) => {
-    Project.findByPk(req.params.project_id)
-    .then(project => {
-        project.destroy()
-        res.send()
 
-    })
 
 
     // const projects = await Project.findAll({

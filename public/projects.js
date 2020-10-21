@@ -107,6 +107,7 @@ const update = {
     // },
 
     edit: async (state, project_id, form) => {
+        
         const project = state.projects.find(project => {
            return project.id == project_id
         })
@@ -128,9 +129,9 @@ const update = {
     },
 
     getProjects: async (state) => {
-        console.log(state)
+     
         state.projects = await fetch('/projects').then(res => res.json())
-        console.log(state)
+
         return state
     }
 
