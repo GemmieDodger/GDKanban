@@ -1,0 +1,192 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+  }
+  .bg {
+    background-attachment:fixed; 
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  a {
+    background: transparent;
+    color:lightgoldenrodyellow;
+    font-weight: bolder;
+    text-decoration: none;
+  }
+  .a1 {
+    font-weight: lighter;
+  }
+  a:hover {
+    color: darkred;
+  }
+  
+  button:hover {
+    color: darkred;
+  }
+  
+
+  header{
+    display: inline;
+    background-color: rgb(5, 5, 5);
+    padding-top: 10px;
+    padding-bottom:10px;
+    min-width: 250px;
+  }
+  
+  h1 {
+    font-family: 'Tangerine', serif;
+    font-size: 2rem;
+    color: lightgoldenrodyellow;
+    text-align: center;
+    grid-area: h1;
+    
+  }
+ 
+  
+  button {
+    background: transparent;
+    color:lightgoldenrodyellow;
+    font-weight: bolder;
+    outline: none;
+    padding: 5px;
+  }
+  input {
+  background: transparent;
+  color: lightgoldenrodyellow;
+  font-weight: bolder;
+  height: 25px;
+  }
+  ::-webkit-input-placeholder { /* Edge */
+  color: lightgoldenrodyellow;
+  text-align: center;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: lightgoldenrodyellow;
+  text-align: center;
+  }
+  ::placeholder {
+  color: lightgoldenrodyellow;
+  text-align: center;
+  }
+  
+  .div1 {
+    border: 0.5rem solid #61616150;
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.63);
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    padding: 2rem;
+    width: 80% ; 
+    margin: 0 auto; 
+    min-height: max-content;
+  }
+  
+  .div1 > div {
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #22030356;
+    padding: 2em;
+    color: #000000;
+  }
+  
+  .project {
+    list-style-type: none;
+    text-align: center;
+  
+   
+  }
+  ul{
+    background-color: #000000;
+    border-radius: 1rem;
+    font-size: 2rem;
+  }
+  li {
+    list-style-type: none;
+  }
+  .div2 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  }
+  .div3 {
+    text-align: center;
+  }
+  
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 3rem;
+    width: 100%;
+    font-size: larger;
+    background-color: rgb(0, 0, 0);
+    color: lightgoldenrodyellow;
+    text-align: center;
+    float: center;
+  }
+  .vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  
+  @media screen and  (min-width: 40em) {
+  .div2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: none;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  }
+  .input1 {
+    border: black 1rem;
+    border-radius: 0;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    font-size: 16px;
+    padding: 1rem;
+    background-color: rgba(36, 36, 36, 0.644);
+    color: black;
+  }
+  .input2 {
+      width: 50%;
+      font-size: 1.5rem;
+  }
+  .addButton {
+    padding: 1rem;
+    width: 5rem;
+    background: #d9d9d9;
+    color: #555;
+    
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+  }
+  
+  
+  
+  @media screen and (min-width: 80rem){
+    .div2 {
+      grid-template-columns: auto auto auto;
+    }
+  }
+  
+  .project {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+  box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(0,0,0,0.25), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
+    cursor: pointer;
+    transition: 0.4s; 
+    color: white;
+  }
