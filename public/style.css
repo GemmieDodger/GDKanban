@@ -2,8 +2,18 @@
 {
     padding: 0;
     margin: 0;
+    color: lightgoldenrodyellow;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
+}
+html {
+    min-width: 400px;
+}
+
+body {
+    background-attachment:fixed; 
+    background-repeat: no-repeat;
+    background-size: cover; 
 }
 
 .bg {
@@ -47,8 +57,14 @@ h1 {
 .options {
     text-align: center;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.473);
-    margin: 20%;
+    
+    background-color: rgba(63, 62, 62, 0.452);
+    box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
+    transition: 0.4s;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
     align-items: center;
     bottom: 0px;
 }
@@ -145,12 +161,14 @@ li{
 .projectCard {
     position: relative;
     padding-bottom: 10px;
-    background-color: rgba(128, 128, 128, 0.459);
+    
     background-repeat: no-repeat;
     background-size: cover;
     
     margin: 10px;
+    background-color: rgba(46, 42, 42, 0.671);
     box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
+
     transition: 0.4s; 
     text-align: center;
     margin-bottom: 1rem;

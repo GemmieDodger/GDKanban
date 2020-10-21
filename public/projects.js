@@ -16,7 +16,8 @@ const viewProject = project => {
         <button class="classOption" onclick="event.preventDefault(); app.run('delete', ${project.id})">❌</button> </br>
         <form onsubmit="app.run('edit', ${project.id}, this ); return false" >
             <input class="input2" name="text" placeholder="Edit title here" required>
-            <button class="classOption" >✅</button></form>
+            <button class="classOption" >✅</button>
+        </form>
         <a class="a1" href="/projects/${project.id}">=></a>
      
     </li>
