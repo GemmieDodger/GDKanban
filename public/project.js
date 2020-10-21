@@ -13,13 +13,6 @@ class List {
             this.tasks = []
     }
 }
-const state = {
-    currentList: '',
-    lists: [],
-    tasks: [],
-    users: [],
-    dragging: null
-}
 
 const viewTask = task => {
     //split into a new function to show the viewing of task
@@ -41,14 +34,14 @@ const viewList = list => {
                 <h2 class="listHeader">${list.title}</h2>
                 
         
-                <ul ${state.currentList = list.list_id} class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event)">
+                <ul class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event)">
                     ${list.tasks.map(viewTask).join("")}
                 </ul>
 
                 ${list.title == 'To Do' ? `
                 <form class="form1" onsubmit="app.run('add', this);return false;">
                     <input name="task" id="taskInput" placeholder="add a task" />
-                    <input name="list_id" type="hidden" value=${list.list_id}> </input>
+                    <input name="list_id" type="hidden" value=${list.id}> </input>
                     <button class="addButton">+ Add</button>
                 </form> 
                 `: ''}
@@ -58,8 +51,10 @@ const viewList = list => {
 const view = (state) =>
     `<div class="wrapper">
     <div class="lists" style="width: 80%">
-       
-            ${state.lists.map(viewList).join("")}
+       ${console.log(state.project)}
+       ${console.log('lists')}
+       ${console.log(state.project.lists)}
+            ${state.project.lists.map(viewList).join("")}
                
     </div>
 
@@ -97,14 +92,14 @@ const update = {
         return state
     },
 
-    getLists: async (state, project_id) => {
+    getLists: async (state) => {
 
         console.log('project get lists')
-        console.log(project_id) //this works     
+        console.log(state.project) //this works     
 
 
 
-        state.lists = await fetch(`/projects/${project_id}`).then(res => res.json())
+        state.lists = await fetch(`/projects/${state.project.id}`).then(res => res.json())
         state.lists = state.lists.lists //cheating...
         
         console.log(state.lists)
@@ -156,4 +151,4 @@ const update = {
 
 
 app.start('projectView', state, view, update)
-app.run(`getLists`, project_id)
+app.run(`getLists`)

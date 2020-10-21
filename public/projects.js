@@ -11,13 +11,12 @@ class Project {
 const viewProject = project => {
 
     return `<li
-    id="${project.project_id}"
+    id="${project.id}"
     class="projectCard vertical-center">${project.text} </br>
-        <button class="classOption" onclick="app.run('delete', ${project.id} )" >❌</button> 
-        <button class="classOption" onclick="app.run('showEdit', ${project.id} )" >📝</button></br>
-        <form onsubmit="app.run('edit', ${project.id}, this ); return false" id="${project.id}" hidden>
-        <input class="input2" name="text" placeholder="Edit name here" required>
-        <button class="classOption" >✅</button></form></br>
+        <button class="classOption" onclick="event.preventDefault(); app.run('delete', ${project.id})">❌</button> </br>
+        <form onsubmit="app.run('edit', ${project.id}, this ); return false" >
+            <input class="input2" name="text" placeholder="Edit title here" required>
+            <button class="classOption" >✅</button></form>
         <a class="a1" href="/projects/${project.id}">=></a>
      
     </li>
@@ -41,11 +40,11 @@ const view = (state) => `
     `
 
 const update = {
-    add: async (state, form) => {
-        console.log(state)
+    add: (state, form) => {
+        
         const data = new FormData(form)
         const project = new Project(data.get('text'))
-        console.log(project)
+        
         const postRequest = {
             method: 'POST',
             headers: {
@@ -53,29 +52,22 @@ const update = {
             },
             body: JSON.stringify(project)
         }
-        state.projects.push(project)
+       
         fetch('/projects', postRequest).then(() => app.run('getProjects'))
         
         return state
     },
 
-    delete: (state, id) => {
-        var index = 0
-        var count = 0
-
-        console.log(id)
-
-        state.projects.forEach(project => {
-            console.log(id)
-            if (id == id) {
-                index = count
-            }
-            count = count + 1
-        })
-
-        console.log(index)
-        fetch(`/projects/${id}/delete`)
-        state.projects.splice(index, 1)
+    delete: async (state, project_id) => {
+             
+        const index = state.projects.findIndex(project => {
+            return project.id == project_id
+         })
+         console.log(index)
+         console.log(project_id)
+         state.projects.splice(index, 1)
+                 
+        await fetch(`/projects/${project_id}/delete`)
 
         return state
     },
@@ -104,19 +96,23 @@ const update = {
         return state
     },
 
-    showEdit: (state, project_id, form) => {
-        var x = document.getElementById(project_id)
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    },
+    // showEdit: (state, project_id) => {
+    //     var x = document.getElementById(project_id)
+    //     if (x.style.display === "none") {
+    //         x.style.display = "block";
+            
+    //     } else {
+    //         x.style.display = "none";
+    //     }
+    // },
 
     edit: async (state, project_id, form) => {
         const project = state.projects.find(project => {
-           return project.project_id == project_id
+           return project.id == project_id
         })
+        console.log('check')
+        console.log(project)
+        console.log(project.text)
         const data = new FormData(form)
         project.text = data.get("text")
         console.log(project)
@@ -132,8 +128,9 @@ const update = {
     },
 
     getProjects: async (state) => {
+        console.log(state)
         state.projects = await fetch('/projects').then(res => res.json())
-        
+        console.log(state)
         return state
     }
 

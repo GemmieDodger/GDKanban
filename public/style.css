@@ -2,17 +2,12 @@
 {
     padding: 0;
     margin: 0;
-    
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
 }
 
 .bg {
-    background-attachment:fixed; 
-    background-repeat: no-repeat;
-    background-size: cover;
-    animation-name: background;
-    animation-duration: 20s;
-    animation-iteration-count: infinite;
+    background-color: rgb(63, 60, 60);
   }
 header{
     color: lightgoldenrodyellow;
@@ -39,9 +34,9 @@ h1 {
 
 .button1 {
     position: absolute;
-    left: 55px;
+    left: 30px;
     top: 25px;
-    
+    border: none;
 }
 
 .wrapper {
@@ -103,7 +98,7 @@ input {
     text-align: center;
   }
 li{
-    padding-top: 5px;
+    padding-top: 10px;
     padding-bottom: 5px;
     text-align: center;
  }
@@ -112,8 +107,7 @@ li{
  }
 .projects {
     float: center;
-    border: 0.5rem solid #290c0c;
-    border-radius: 1rem;
+   
     top: 50%;
     left: 50%;
     background-repeat: no-repeat;
@@ -143,7 +137,6 @@ li{
     padding: 2rem;
     width: 80% ; 
     margin: 0 auto; 
-    
     background-image: url("/images/deerinmountain.jpg");
     background-repeat: no-repeat;
     
@@ -152,7 +145,7 @@ li{
 .projectCard {
     position: relative;
     padding-bottom: 10px;
-    
+    background-color: rgba(128, 128, 128, 0.459);
     background-repeat: no-repeat;
     background-size: cover;
     
