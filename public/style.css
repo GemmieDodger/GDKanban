@@ -31,10 +31,12 @@ h1 {
     padding: 1rem;
     text-align: center;
     grid-area: h1;
+    font-size: 45px;
+
 }
 #headerText {
     font-family: 'Tangerine', serif;
-    font-size: 5rem;
+   
 }
 .listHeader {
     padding: 10px;
@@ -45,7 +47,7 @@ h1 {
 .button1 {
     position: absolute;
     left: 30px;
-    top: 25px;
+    top: 41px;
     border: none;
 }
 
@@ -57,8 +59,8 @@ h1 {
 .options {
     text-align: center;
     padding: 20px;
-    
-    background-color: rgba(63, 62, 62, 0.452);
+    border-radius: 1rem;
+    background-color: rgba(46, 42, 42, 0.671);
     box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
     transition: 0.4s;
     margin-left: 20%;

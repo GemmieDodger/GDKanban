@@ -11,8 +11,10 @@ class Project {
 const viewProject = project => {
 
     return `<li
-    id="${project.id}"
-    class="projectCard vertical-center">${project.text} </br>
+    id="${project.text}"
+    class="projectCard vertical-center" 
+    onmouseover="app.run('colourIn',${project.text})" "onmouseout="app.run('colourOut',${project.text})"
+    >${project.text} </br>
         <button class="classOption" onclick="event.preventDefault(); app.run('delete', ${project.id})">❌</button> </br>
         <form onsubmit="app.run('edit', ${project.id}, this ); return false" >
             <input class="input2" name="text" placeholder="Edit title here" required>
@@ -133,6 +135,18 @@ const update = {
      
         state.projects = await fetch('/projects').then(res => res.json())
 
+        return state
+    },
+
+    colourIn: (state, project_text) => {
+        var x = document.getElementById(project_text);
+        x.style.backgroundColor = 'grey';
+        return state
+    },
+
+    colourOut: (state, project_text) => {
+        var x = document.getElementById(project_text);
+        x.style.backgroundColor = 'rgba(46, 42, 42, 0.671)';
         return state
     }
 
