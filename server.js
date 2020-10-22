@@ -64,12 +64,6 @@ app.post('/projects/:project_id/edit', async(request, response) => {
     const project = await Project.findByPk(request.params.project_id)
     await project.update(request.body)
     
-    // const project = await Project.findByPk(request.params.project_id)
-    // Project.findByPk(req.params.project_id)
-    // .then (project => {
-    //     project.text = {text: req.body.text}
-    //     res.send()
-    // })
     response.send()
 })
 
@@ -99,8 +93,51 @@ app.get('/projects/:project_id', async (request, response) => {
         date: new Date()}
     )
 })
-    
 
+//CREATE NEW TASK
+
+app.post('/projects/:project_id/lists/:list_id/tasks', async (req,res) => {
+
+    const task = await Task.create({text: req.body.text})
+    await task.update({ListId: req.params.list_id})
+    res.send()
+})
+    
+//DELETE TASK ON DROP
+
+app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/delete`, (request, response) => {
+    Task.findByPk(req.params.task_id)
+    .then(task => {
+        task.destroy()
+        res.send()
+
+    })
+})
+
+//ON DROP MOVE ID
+
+app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/:newList`, async (req, res) => {
+    const project = await Project.findByPk(req.params.project_id)
+    const list = await List.findByPk(req.params.list_id)
+    const newList = await List.findByPk(req.params.newList)
+    const task = await Task.findByPk(req.params.task_id)
+    await task.update({ListId:req.params.newList})
+  
+    res.send()
+})
+//GET LISTS
+
+app.get(`/projects/:project_id/lists`, async (request, response) => {
+    const lists = await List.findAll({
+        include: [
+            {model: Task, as: 'tasks'}
+        ]
+        
+    })
+   // SENDS BACK TO SERVER response.send(projects) 
+    response.send(tasks) //looks for view engine (handlebars)
+    
+})
 
 app.listen(3000, () => {
     console.log('app server running on port', 3000)

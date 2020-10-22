@@ -1,3 +1,5 @@
+
+
 class Task {
     constructor(text, task_id) {
         this.task_id = task_id || window.crypto.getRandomValues(new Uint8Array(3)).join("")
@@ -17,13 +19,13 @@ class List {
 const viewTask = task => {
     //split into a new function to show the viewing of task
     return `<li
-id="${task.task_id}"
+id="${task.id}"
 draggable="true" 
-onclick="app.run('done', ${task.task_id})"
+onclick="app.run('done', ${task.id})"
 ondragstart="app.run('onDragTask', event)"
 class="${task.status === 0 ? '' : 'done'} taskList"
 >${task.text} ${task.status === 1 ? `
- <button onclick="app.run('deleteTask', ${task.task_id})">Delete</button>` : ''} 
+ <button onclick="app.run('deleteTask', ${task.id})">Delete</button>` : ''} 
 
 </li>
 `
@@ -34,14 +36,14 @@ const viewList = list => {
            <div class="card" id="toDoList" style="width: 100%; height:100%">
                 <h2 class="listHeader">${list.title}</h2>
         
-                    <ul class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event)">
+                    <ul class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event, ${list.id})">
                         ${list.tasks.map(viewTask).join("")}
                     </ul>
 
                 ${list.title == 'To Do' ? `
                 <form class="form1" onsubmit="app.run('add', this);return false;">
-                    <input name="task" id="taskInput" placeholder="add a task" />
-                    <input name="list_id" type="hidden" value=${list.list_id}> </input>
+                    <input name="text" id="taskInput" placeholder="add a task" />
+                    
                     <button class="addButton">+ Add</button>
                 </form> 
                 `: ''}
@@ -56,7 +58,7 @@ const view = (state) =>
                     
             </div>
 
-    <div class=" options deleteOnHover" ondragover="event.preventDefault()" ondrop="app.run('onDropDeleteTask', event)">Delete</div>
+    <div class="options deleteOnHover" ondragover="event.preventDefault()" ondrop="app.run('onDropDeleteTask', event)">Delete</div>
 
 
         
@@ -66,12 +68,13 @@ const view = (state) =>
 
 
 const update = {
-    add: async (state, form) => {
+    add:  (state, form) => {
         const data = new FormData(form)
-        const list_id = data.get('list_id')
-        
-        const task = new Task(data.get('task'))
+        const list_id = state.lists[0].id
+        //LIST ID
 
+        const task =  new Task(data.get('text'))
+  
         const postRequest = {
             method: 'POST',
             headers: {
@@ -79,14 +82,14 @@ const update = {
             },
             body: JSON.stringify(task)
         }
-
-        const list = state.lists.find(list => list.list_id === data.get('list_id'))
-        list.tasks.push(task)
-        console.log("new task")
-        console.log(task) //this is right
-        // console.log("to do list tasks")
-        // console.log(list.tasks) //this is right
-        fetch(`/projects/${project_id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getTasks', project_id, list_id))
+        fetch(`/projects/${state.project.id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getProject'))
+        // const list = state.lists.find(list => list.list_id === data.get('list_id'))
+        // list.tasks.push(task)
+        // console.log("new task")
+        // console.log(task) //this is right
+        // // console.log("to do list tasks")
+        // // console.log(list.tasks) //this is right
+        // fetch(`/projects/${project_id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getTasks', project_id, list_id))
         return state
     },
 
@@ -106,7 +109,10 @@ const update = {
         state.project = await fetch(`/projects/${state.project.id}`).then(res => res.json())
         return state
     },
- 
+    getLists: async (state) => {
+        state.lists = await fetch(`/projects/${state.project.id}/lists`).then(res => res.json())
+        return state
+    },
     deleteTask: (state, task_id) => {
         const index = state.doneTasks.findIndex(element => element.task_id === task_id)
         //fetch(`/projects/${project_id}/lists/${list_id}/delete`)
@@ -115,38 +121,97 @@ const update = {
     },
 
     onDragTask: (state, event) => {
-        event.dataTransfer.setData('text', event.target.task_id)
+        event.dataTransfer.setData('text', event.target.id)
+        // event.dataTransfer.setData('list_id', event.target.listId)
         return state
     },
 
-    onDropTask(state, event) {
+    onDropTask(state, event, new_list) {
+
+
+        const newList = new_list
+        const project_id = state.project.id
+        
         const task_id = event.dataTransfer.getData('text')
-        const list_id = state.currentList
-        console.log('on drop task')
-        console.log(task_id)
-        console.log('on drop task list')
-        console.log(list_id)
-        const task = state.lists.find(task => task.task_id == task_id)
-        state.lists.splice(index, 1)
-        state.doingTasks.push(task)
+        console.log(state.lists)
+         console.log(task_id)
+
+        const listCheck = state.lists[0].tasks.find(task => task.id == task_id )
+        const list2Check = state.lists[1].tasks.find(task => task.id == task_id)
+        const list3Check = state.lists[2].tasks.find(task => task.id == task_id) 
+        
+        var list_id
+        if (listCheck) { 
+           list_id = state.lists[0].id
+           console.log(list_id)
+        }
+        if (list2Check) { 
+           list_id = state.lists[1].id
+            console.log(list_id)
+         }
+         if (list3Check) { 
+           list_id = state.lists[2].id
+            console.log(list_id)
+         }
+         console.log(list_id)
+
+
+
+
+        //  const list_id = state.lists.forEach(list => {
+        //     list.tasks.find(task => {
+        //        return task_id == task.id 
+                 
+        //     })
+        //  })
+        
+      
+        // const index = list.tasks.findIndex(task => {
+        //     return task.id === task_id 
+        // })
+    
+        // console.log('index')
+        // console.log(index)
+        // console.log('task')
+        // console.log(task_id)
+       
+        // state.list.splice(index, 1)
+        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${newList}`).then(() => app.run('get'))
         return state
     },
 
     onDropDeleteTask: (state, event) => {
+        const project_id = state.project.id
+        
         const task_id = event.dataTransfer.getData('text')
+        const list_id = task_id.listId
+
+        const task = state.lists.find(list => {
+            return list_id == list.id
+        })
+        
+        const list = state.lists.find(list => {
+            return list_id == list.id
+        })
+        console.log('project')
+        console.log(project_id)
+        console.log('task id')
         console.log(task_id)
-        const index = state.doneTasks.findIndex(task => task.task_id == task_id)
-        state.doneTasks.splice(index, 1)
+        console.log('list id')
+        console.log(list_id)
+        const index = list.tasks.findIndex(task => {
+            return task.id ==task_id 
+        })
+        console.log('index')
+        console.log(index)
+        console.log('task')
+        console.log(task_id)
+       
+        state.list.splice(index, 1)
+        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/delete`)
         return state
-    },
-    getTasks: async (state, project_id, list_id)  => {
-        console.log('project get tasks')
-        console.log(project_id, list_id)   
-        state.tasks = await fetch(`/projects/${project_id}/lists/${list_id}/tasks`).then(res => res.json())
-        state.tasks = state.tasks.tasks 
-        console.log(state.tasks)
-        return state
-    },
+    }
+    
 
 }
 

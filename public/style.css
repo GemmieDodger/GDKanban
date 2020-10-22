@@ -4,21 +4,22 @@
     margin: 0;
     color: lightgoldenrodyellow;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
+    
 }
 html {
     min-width: 400px;
+    background-image: url("/images/deerinmountain.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 body {
     background-attachment:fixed; 
     background-repeat: no-repeat;
     background-size: cover; 
+    
 }
 
-.bg {
-    background-color: rgb(63, 60, 60);
-  }
 header{
     color: lightgoldenrodyellow;
     background-color: rgba(0, 0, 0, 0.473);
@@ -143,9 +144,9 @@ li{
     margin: 20px;
 }
 .lists {
-    
+
     float: center;
-    border: 0.5rem solid #290c0c;
+    /* border: 0.5rem solid #290c0c; */
     border-radius: 1rem;
     top: 50%;
     left: 50%;
@@ -155,17 +156,16 @@ li{
     padding: 2rem;
     width: 80% ; 
     margin: 0 auto; 
-    background-image: url("/images/deerinmountain.jpg");
-    background-repeat: no-repeat;
+
     
    
 }
 .projectCard {
     position: relative;
     padding-bottom: 10px;
-    
+/*     
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */
     
     margin: 10px;
     background-color: rgba(46, 42, 42, 0.671);
@@ -186,10 +186,12 @@ li{
     margin: 0;
     width: 80%;
     height: 80%;
-    border-radius: 1rem;
-    box-shadow: 0.3rem 0.3rem 2rem 0.5rem  rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
-    cursor: pointer;
+    background-color: rgba(46, 42, 42, 0.671);
+    box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
+
     transition: 0.4s; 
+    cursor: pointer;
+
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
@@ -207,7 +209,8 @@ li{
     border-color: black;
     cursor: pointer;
     transition: 0.4s; 
-    background-color: rgba(255, 255, 255, 0.267);
+    background-color: rgba(46, 42, 42, 0.671);
+    box-shadow: 0.3rem 0.3rem 2rem 0.5rem rgba(34, 27, 27, 0.705), -0.3rem -0.3rem 2rem 0.5rem rgba(0,0,0,0.22);
     background-repeat: no-repeat;
     background-size: cover;
 }
