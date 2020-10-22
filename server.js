@@ -81,7 +81,7 @@ app.get('/projects/:project_id/delete', async (req, res) => {
         res.send()
 
     })
-
+})
 //GET SINGULAR PROJECT
  
 app.get('/projects/:project_id', async (request, response) => {
@@ -91,28 +91,16 @@ app.get('/projects/:project_id', async (request, response) => {
             {model: Task, as: 'tasks'}
         ]
     })
-    
+  
  
-    response.render('project',{project:JSON.stringify(project), date: new Date()}
+    response.render('project',{
+        project: JSON.stringify(project), 
+        lists: JSON.stringify(lists),
+        date: new Date()}
     )
 })
-
-
-
-
-    // const projects = await Project.findAll({
-    //     include: [
-    //         {model: List, as: 'lists'}
-    //     ]
-    // }) 
-    // const index = projects.findIndex( project => {
-    //     return projects.project_id == req.params.project_id
-    // }) 
-    // projects.splice(index, 1)
-    // res.send()
-    // response.render('projects', {projects:JSON.stringify(projects)})
     
-})
+
 
 app.listen(3000, () => {
     console.log('app server running on port', 3000)

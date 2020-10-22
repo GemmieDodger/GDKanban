@@ -21,8 +21,9 @@ id="${task.task_id}"
 draggable="true" 
 onclick="app.run('done', ${task.task_id})"
 ondragstart="app.run('onDragTask', event)"
-class="${task.status === 0 ? '' : 'done'} task"
->${task.text} ${task.status === 1 ? `<button class="deleteButton" onclick="app.run('deleteTask', ${task.task_id})">Delete</button>` : ''} 
+class="${task.status === 0 ? '' : 'done'} taskList"
+>${task.text} ${task.status === 1 ? `
+ <button onclick="app.run('deleteTask', ${task.task_id})">Delete</button>` : ''} 
 
 </li>
 `
@@ -32,11 +33,10 @@ const viewList = list => {
     return `
            <div class="card" id="toDoList" style="width: 100%; height:100%">
                 <h2 class="listHeader">${list.title}</h2>
-                
         
-                <ul ${state.currentList = list.list_id} class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event)">
-                    ${list.tasks.map(viewTask).join("")}
-                </ul>
+                    <ul class="taskLists"  ondragover="event.preventDefault()" ondrop="app.run('onDropTask', event)">
+                        ${list.tasks.map(viewTask).join("")}
+                    </ul>
 
                 ${list.title == 'To Do' ? `
                 <form class="form1" onsubmit="app.run('add', this);return false;">
@@ -50,15 +50,13 @@ const viewList = list => {
 }
 const view = (state) =>
     `<div class="wrapper">
-    <div class="lists" style="width: 80%">
-       ${console.log(state.project)}
-       ${console.log('lists')}
-       ${console.log(state.project.lists)}
-            ${state.project.lists.map(viewList).join("")}
-               
-    </div>
+        <div class="lists" style="width: 80%">
 
-    <div class="deleteOnHover" ondragover="event.preventDefault()" ondrop="app.run('onDropDeleteTask', event)">Delete</div>
+                    ${state.lists.map(viewList).join("")}
+                    
+            </div>
+
+    <div class=" options deleteOnHover" ondragover="event.preventDefault()" ondrop="app.run('onDropDeleteTask', event)">Delete</div>
 
 
         
@@ -92,20 +90,23 @@ const update = {
         return state
     },
 
-    getLists: async (state) => {
+    // getLists: async (state) => {
 
-        console.log('project get lists')
-        console.log(state.project) //this works     
+    //     console.log('project get lists')
+    //     console.log(state.project) //this works     
 
-
-
-        state.lists = await fetch(`/projects/${state.project.id}`).then(res => res.json())
-        state.lists = state.lists.lists //cheating...
+    //     state.project = await fetch(`/projects/${state.project.id}`).then(res => res.json())
+    //     // state.lists = state.lists.lists //cheating...
         
-        console.log(state.lists)
+    //     console.log(state.lists)
+    //     return state
+    // },
+
+    getProject: async (state) => {
+        state.project = await fetch(`/projects/${state.project.id}`).then(res => res.json())
         return state
     },
-
+ 
     deleteTask: (state, task_id) => {
         const index = state.doneTasks.findIndex(element => element.task_id === task_id)
         //fetch(`/projects/${project_id}/lists/${list_id}/delete`)
@@ -151,4 +152,4 @@ const update = {
 
 
 app.start('project', state, view, update)
-app.run(`getLists`)
+// app.run(`getProject`)

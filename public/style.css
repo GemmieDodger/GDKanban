@@ -199,6 +199,18 @@ li{
     text-align: center;
     
 }
+.taskList {
+    margin-bottom: 1rem;
+    width: 100%;
+  
+    border-radius: 1rem;
+    border-color: black;
+    cursor: pointer;
+    transition: 0.4s; 
+    background-color: rgba(255, 255, 255, 0.267);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 .task {
     
