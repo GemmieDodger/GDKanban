@@ -74,40 +74,7 @@ const update = {
         return state
     },
 
-    doing: (state, project_id) => {
-        var index = 0
-        var count = 0
-
-        console.log(project_id)
-
-        state.projects.forEach(project => {
-            console.log(project.project_id)
-            if (project_id == project.project_id) {
-                index = count
-            }
-            count = count + 1
-        })
-        /*
-        if (state.projects[index].doing === "Inactive 😢") {
-            state.projects[index].doing = "Active ✅"
-        }
-        else {
-            state.projects[index].doing = "Inactive 😢"
-        }*/
-
-        return state
-    },
-
-    // showEdit: (state, project_id) => {
-    //     var x = document.getElementById(project_id)
-    //     if (x.style.display === "none") {
-    //         x.style.display = "block";
-            
-    //     } else {
-    //         x.style.display = "none";
-    //     }
-    // },
-
+   
     edit: async (state, project_id, form) => {
         
         const project = state.projects.find(project => {
