@@ -17,7 +17,7 @@ class List {
 }
 
 const viewTask = task => {
-    //split into a new function to show the viewing of task
+
     return `<li
 id="${task.id}"
 draggable="true" 
@@ -52,7 +52,7 @@ const viewList = list => {
 }
 const view = (state) =>
     `<div class="wrapper">
-        <div class="lists" style="width: 80%">
+        <div class="lists" ">
 
                     ${state.lists.map(viewList).join("")}
                     
@@ -82,14 +82,8 @@ const update = {
             },
             body: JSON.stringify(task)
         }
-        fetch(`/projects/${state.project.id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getProject'))
-        // const list = state.lists.find(list => list.list_id === data.get('list_id'))
-        // list.tasks.push(task)
-        // console.log("new task")
-        // console.log(task) //this is right
-        // // console.log("to do list tasks")
-        // // console.log(list.tasks) //this is right
-        // fetch(`/projects/${project_id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getTasks', project_id, list_id))
+        fetch(`/projects/${state.project.id}/lists/${list_id}/tasks`, postRequest).then(() => app.run('getLists'))
+       
         return state
     },
 
@@ -99,6 +93,7 @@ const update = {
     },
     getLists: async (state) => {
         state.lists = await fetch(`/projects/${state.project.id}/lists`).then(res => res.json())
+        
         return state
     },
 
@@ -140,7 +135,7 @@ const update = {
 
 
 
-        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${newList}`).then(() => app.run('getProject'))
+        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${newList}`).then(() => app.run('getLists'))
         return state
     },
 
@@ -182,4 +177,3 @@ const update = {
 
 
 app.start('project', state, view, update)
-// app.run(`getProject`)

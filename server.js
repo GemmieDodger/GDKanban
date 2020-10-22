@@ -36,7 +36,10 @@ app.get(['/'], async (request, response) => {
         ]
     })
    // SENDS BACK TO SERVER response.send(projects) 
-    response.render('projects', {projects:JSON.stringify(projects), date: new Date()}) //looks for view engine (handlebars)
+    response.render('projects', 
+    {projects:JSON.stringify(projects), 
+        date: new Date()}
+        ) //looks for view engine (handlebars)
     
 })
 // regular get all projects
@@ -109,10 +112,9 @@ app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/delete`, (request, 
     Task.findByPk(request.params.task_id)
     .then(task => {
         task.destroy()
-       
+        response.send()
 
     })
-     response.send()
 })
 
 //ON DROP MOVE ID
