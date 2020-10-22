@@ -106,12 +106,13 @@ app.post('/projects/:project_id/lists/:list_id/tasks', async (req,res) => {
 //DELETE TASK ON DROP
 
 app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/delete`, (request, response) => {
-    Task.findByPk(req.params.task_id)
+    Task.findByPk(request.params.task_id)
     .then(task => {
         task.destroy()
-        res.send()
+       
 
     })
+     response.send()
 })
 
 //ON DROP MOVE ID

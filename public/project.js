@@ -93,18 +93,6 @@ const update = {
         return state
     },
 
-    // getLists: async (state) => {
-
-    //     console.log('project get lists')
-    //     console.log(state.project) //this works     
-
-    //     state.project = await fetch(`/projects/${state.project.id}`).then(res => res.json())
-    //     // state.lists = state.lists.lists //cheating...
-        
-    //     console.log(state.lists)
-    //     return state
-    // },
-
     getProject: async (state) => {
         state.project = await fetch(`/projects/${state.project.id}`).then(res => res.json())
         return state
@@ -113,16 +101,11 @@ const update = {
         state.lists = await fetch(`/projects/${state.project.id}/lists`).then(res => res.json())
         return state
     },
-    deleteTask: (state, task_id) => {
-        const index = state.doneTasks.findIndex(element => element.task_id === task_id)
-        //fetch(`/projects/${project_id}/lists/${list_id}/delete`)
-        state.doneTasks.splice(index, 1)
-        return state
-    },
+
 
     onDragTask: (state, event) => {
         event.dataTransfer.setData('text', event.target.id)
-        // event.dataTransfer.setData('list_id', event.target.listId)
+
         return state
     },
 
@@ -157,26 +140,7 @@ const update = {
 
 
 
-
-        //  const list_id = state.lists.forEach(list => {
-        //     list.tasks.find(task => {
-        //        return task_id == task.id 
-                 
-        //     })
-        //  })
-        
-      
-        // const index = list.tasks.findIndex(task => {
-        //     return task.id === task_id 
-        // })
-    
-        // console.log('index')
-        // console.log(index)
-        // console.log('task')
-        // console.log(task_id)
-       
-        // state.list.splice(index, 1)
-        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${newList}`).then(() => app.run('get'))
+        fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${newList}`).then(() => app.run('getProject'))
         return state
     },
 
@@ -184,30 +148,31 @@ const update = {
         const project_id = state.project.id
         
         const task_id = event.dataTransfer.getData('text')
-        const list_id = task_id.listId
 
-        const task = state.lists.find(list => {
-            return list_id == list.id
-        })
+        const listCheck = state.lists[0].tasks.find(task => task.id == task_id )
+        const list2Check = state.lists[1].tasks.find(task => task.id == task_id)
+        const list3Check = state.lists[2].tasks.find(task => task.id == task_id) 
         
-        const list = state.lists.find(list => {
+        var list_id
+        if (listCheck) { 
+           list_id = state.lists[0].id
+           console.log(list_id)
+        }
+        if (list2Check) { 
+           list_id = state.lists[1].id
+            console.log(list_id)
+         }
+         if (list3Check) { 
+           list_id = state.lists[2].id
+            console.log(list_id)
+         }
+         console.log(list_id)
+
+
+         const task = state.lists.find(list => {
             return list_id == list.id
         })
-        console.log('project')
-        console.log(project_id)
-        console.log('task id')
-        console.log(task_id)
-        console.log('list id')
-        console.log(list_id)
-        const index = list.tasks.findIndex(task => {
-            return task.id ==task_id 
-        })
-        console.log('index')
-        console.log(index)
-        console.log('task')
-        console.log(task_id)
-       
-        state.list.splice(index, 1)
+
         fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/delete`)
         return state
     }
