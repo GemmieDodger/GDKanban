@@ -258,7 +258,9 @@ li{
   .classOption {
       border: none;
   }
-
+  .classOption {
+    border: darkred;
+}
   
   /* Clear floats after the columns */
   .card:after {

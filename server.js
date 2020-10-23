@@ -18,11 +18,6 @@ app.use(express.urlencoded({ extended: true}))
 app.use(express.json())
 
 
-//GET HOME
-
-// app.get('/', (request, response) => {
-//     response.render('projects', {date: new Date()})
-// })
 
 
 //PROJECTS
@@ -42,7 +37,7 @@ app.get(['/'], async (request, response) => {
         ) //looks for view engine (handlebars)
     
 })
-// regular get all projects
+// REGULAR GET ALL PROJECTS
 app.get(['/projects'], async (request, response) => {
     const projects = await Project.findAll({
         include: [
@@ -50,12 +45,11 @@ app.get(['/projects'], async (request, response) => {
         ]
         
     })
-   // SENDS BACK TO SERVER response.send(projects) 
-    response.send(projects) //looks for view engine (handlebars)
+    response.send(projects) 
     
 })
 
-//create
+//CREATE PROJECT
 app.post(['/','/projects'], async (req,res) => {
     await Project.create({text: req.body.text})
    
@@ -131,15 +125,33 @@ app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/:newList`, async (r
 //GET LISTS
 
 app.get(`/projects/:project_id/lists`, async (request, response) => {
-    const lists = await List.findAll({
+    const project = await Project.findByPk(request.params.project_id)
+    const lists = await project.getLists({
         include: [
             {model: Task, as: 'tasks'}
         ]
-        
     })
+    // const lists = await List.findAll({
+    //     include: [
+    //         {model: Task, as: 'tasks'}
+    //     ]
+        
+    // })
    // SENDS BACK TO SERVER response.send(projects) 
-    response.send(tasks) //looks for view engine (handlebars)
+    response.send(lists) //looks for view engine (handlebars)
     
+})
+
+
+app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/:priority`, async (req, res) => {
+
+    const project = await Project.findByPk(req.params.project_id)
+    const list = await List.findByPk(req.params.list_id)
+    
+    const task = await Task.findByPk(req.params.task_id)
+    await task.update({status:req.params.priority})
+
+    res.send()
 })
 
 app.listen(3000, () => {

@@ -102,21 +102,7 @@ const update = {
         state.projects = await fetch('/projects').then(res => res.json())
 
         return state
-    },
-
-    colourIn: (project_id) => {
-        console.log(project_id)
-        var x = document.getElementById(project_id);
-        x.style.backgroundColor = 'grey';
-        return state
-    },
-
-    colourOut: (project_id) => {
-        var x = document.getElementById(project_id);
-        x.style.backgroundColor = 'rgba(46, 42, 42, 0.671)';
-        return state
     }
-
 
 }
 
