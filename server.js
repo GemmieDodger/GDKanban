@@ -143,7 +143,7 @@ app.get(`/projects/:project_id/lists`, async (request, response) => {
 })
 
 
-app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/:priority`, async (req, res) => {
+app.get(`/projects/:project_id/lists/:list_id/tasks/:task_id/priority/:priority`, async (req, res) => {
 
     const project = await Project.findByPk(req.params.project_id)
     const list = await List.findByPk(req.params.list_id)

@@ -22,17 +22,14 @@ const viewTask = task => {
         
         ondragstart="app.run('onDragTask', event)"
         class=" taskList"
-        >${task.text} 
+        >${task.text} </br> 
+        <button class="classOption" ondragover="event.preventDefault()" id="${task.id}" onclick="app.run('switchPriority', event, ${task.id}, ${task.status})">
+            ${task.status ? `⭐️` : `🙂 `}
+        </button> 
 
 </li>
 `
 }
-
-// //</br> 
-// <button class="classOption" ondragover="event.preventDefault()" id="${task.id}" onclick="app.run('switchPriority', event, ${task.id}, ${task.status})">
-// ${task.status === true ? `⭐️` : `🙂 `}
-// </button> 
-
 const viewList = list => {
 
     return `
@@ -197,17 +194,31 @@ const update = {
 
         }
 
-        var priority
+        var task_status
         if (task_status == false) {
             task_status = 1
         } else {
             task_status = 0
         }
+        
+        const tasks = [...state.lists[0].tasks, ...state.lists[1].tasks, ...state.lists[2].tasks]
+        const task = tasks.find((task) => {
+            return task.id === task_id
+        })
+        
+        if (task.status == false) {
+            task.status = 1
+        } else {
+            task.status = 0
+        }
+        console.log('tasks')
+        console.log(task.status)
+        
         console.log('task id')
         console.log(task_id)
         console.log('task status')
         console.log(task_status)
-        await fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/${task_status}`).then(() => app.run('getLists'))
+        await fetch(`/projects/${project_id}/lists/${list_id}/tasks/${task_id}/priority/${task_status}`)
         return state
 
     }
